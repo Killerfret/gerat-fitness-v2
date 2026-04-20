@@ -42,10 +42,19 @@
       border-bottom: 1px solid rgba(0,0,0,.07);
     }
     .nav-logo {
-      font-family: var(--serif); font-size: 22px; font-weight: 700;
-      color: var(--black); text-decoration: none; letter-spacing: .5px;
+      display: flex; align-items: center; gap: 10px;
+      color: var(--black); text-decoration: none;
     }
-    .nav-logo em { font-style: italic; color: var(--orange); }
+    .nav-logo svg { height: 40px; width: auto; flex-shrink: 0; }
+    .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .nav-logo-name {
+      font-family: var(--sans); font-size: 13px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--black);
+    }
+    .nav-logo-title {
+      font-family: var(--sans); font-size: 9px; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--gray);
+    }
     .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a {
       font-size: 13px; font-weight: 500; color: var(--charcoal);
@@ -494,10 +503,20 @@
     }
     .footer-brand { max-width: 280px; }
     .footer-logo {
-      font-family: var(--serif); font-size: 26px; font-weight: 700;
-      color: var(--white); text-decoration: none; margin-bottom: 16px; display: block;
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; margin-bottom: 16px;
     }
-    .footer-logo em { font-style: italic; color: var(--orange); }
+    .footer-logo svg { height: 52px; width: auto; }
+    .footer-logo svg path[fill="#8A8A8A"] { fill: rgba(255,255,255,.5); }
+    .footer-logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .footer-logo-name {
+      font-family: var(--sans); font-size: 14px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--white);
+    }
+    .footer-logo-title {
+      font-family: var(--sans); font-size: 9px; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.4);
+    }
     .footer-brand p { font-size: 14px; line-height: 1.7; }
     .footer-col h5 {
       font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
@@ -574,7 +593,25 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#hero" class="nav-logo">Diogo <em>Cerdoura</em></a>
+  <a href="#hero" class="nav-logo">
+    <svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M50 3C45 3 42 7 42 12L43 18C45 22 47 24 50 24C53 24 55 22 57 18L58 12C58 7 55 3 50 3Z" fill="#8A8A8A"/>
+      <path d="M45 24L50 30L55 24" stroke="#3DBDB8" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M43 28C36 29 23 35 18 44L16 63C16 75 22 83 34 87L50 90L66 87C78 83 84 75 84 63L82 44C77 35 64 29 57 28Z" fill="#8A8A8A"/>
+      <line x1="50" y1="30" x2="50" y2="83" stroke="#666" stroke-width="1" opacity="0.4"/>
+      <path d="M44 62Q50 65 56 62" stroke="#666" stroke-width="1" fill="none" opacity="0.3"/>
+      <path d="M44 72Q50 75 56 72" stroke="#666" stroke-width="1" fill="none" opacity="0.3"/>
+      <path d="M24 40L6 22" stroke="#3DBDB8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M17 61L3 49L6 22" stroke="#3DBDB8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M76 40L94 22" stroke="#3DBDB8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M83 61L97 49L94 22" stroke="#3DBDB8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M30 89L50 107L70 89" stroke="#7A7A7A" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">Diogo Cerdoura</span>
+      <span class="nav-logo-title">Personal Trainer</span>
+    </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">Sobre</a></li>
     <li><a href="#servicos">Serviços</a></li>
@@ -948,7 +985,23 @@
 <footer>
   <div class="footer-main">
     <div class="footer-brand">
-      <a href="#hero" class="footer-logo">Diogo <em>Cerdoura</em></a>
+      <a href="#hero" class="footer-logo">
+        <svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 3C45 3 42 7 42 12L43 18C45 22 47 24 50 24C53 24 55 22 57 18L58 12C58 7 55 3 50 3Z" fill="rgba(255,255,255,.5)"/>
+          <path d="M45 24L50 30L55 24" stroke="#3DBDB8" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M43 28C36 29 23 35 18 44L16 63C16 75 22 83 34 87L50 90L66 87C78 83 84 75 84 63L82 44C77 35 64 29 57 28Z" fill="rgba(255,255,255,.5)"/>
+          <line x1="50" y1="30" x2="50" y2="83" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <path d="M24 40L6 22" stroke="#3DBDB8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M17 61L3 49L6 22" stroke="#3DBDB8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M76 40L94 22" stroke="#3DBDB8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M83 61L97 49L94 22" stroke="#3DBDB8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M30 89L50 107L70 89" stroke="rgba(255,255,255,.4)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="footer-logo-text">
+          <span class="footer-logo-name">Diogo Cerdoura</span>
+          <span class="footer-logo-title">Personal Trainer</span>
+        </div>
+      </a>
       <p>Personal trainer certificado — aqui para te fazer ir ao ginásio, mesmo quando não apetece.</p>
     </div>
     <div class="footer-col">
