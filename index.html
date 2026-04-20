@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerat Fitness — Personal Trainer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #F5F0E8;
+      --cream2:   #EDE8DF;
+      --black:    #111010;
+      --charcoal: #2A2A2A;
+      --gray:     #888580;
+      --orange:   #E05C2A;
+      --orange2:  #C44B1E;
+      --white:    #FFFFFF;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans:  'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--cream); color: var(--black); overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 64px;
+      transition: all .4s;
+    }
+    nav.scrolled {
+      background: rgba(245,240,232,.95);
+      backdrop-filter: blur(16px);
+      padding: 18px 64px;
+      border-bottom: 1px solid rgba(0,0,0,.07);
+    }
+    .nav-logo {
+      font-family: var(--serif); font-size: 22px; font-weight: 700;
+      color: var(--black); text-decoration: none; letter-spacing: .5px;
+    }
+    .nav-logo em { font-style: italic; color: var(--orange); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; color: var(--charcoal);
+      text-decoration: none; letter-spacing: .5px;
+      transition: color .2s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; bottom: -3px;
+      width: 0; height: 1px; background: var(--orange);
+      transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--black); color: var(--white);
+      padding: 12px 28px; font-size: 13px; font-weight: 500;
+      text-decoration: none; border-radius: 2px;
+      transition: all .25s; letter-spacing: .5px;
+    }
+    .nav-cta:hover { background: var(--orange); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; border: none; background: none; }
+    .hamburger span { width: 22px; height: 1.5px; background: var(--black); display: block; transition: .3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--cream);
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 140px 64px 80px;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 32px;
+      animation: fadeUp .7s ease both;
+    }
+    .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--orange); }
+    .hero-title {
+      font-family: var(--serif); font-weight: 900;
+      font-size: clamp(58px, 7vw, 110px); line-height: .95;
+      color: var(--black); animation: fadeUp .7s .1s ease both;
+    }
+    .hero-title .italic { font-style: italic; color: var(--orange); }
+    .hero-title .outline {
+      -webkit-text-stroke: 1.5px var(--black);
+      color: transparent;
+    }
+    .hero-desc {
+      font-size: 17px; font-weight: 300; color: var(--gray);
+      line-height: 1.8; max-width: 400px; margin-top: 32px;
+      animation: fadeUp .7s .2s ease both;
+    }
+    .hero-desc strong { color: var(--black); font-weight: 500; }
+    .hero-actions {
+      display: flex; align-items: center; gap: 24px; margin-top: 48px;
+      animation: fadeUp .7s .3s ease both;
+    }
+    .btn-fill {
+      background: var(--orange); color: var(--white);
+      padding: 16px 36px; font-size: 13px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+      border-radius: 2px; transition: all .25s; border: none; cursor: pointer;
+    }
+    .btn-fill:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(224,92,42,.3); }
+    .btn-outline-dark {
+      color: var(--black); border-bottom: 1.5px solid var(--black);
+      padding-bottom: 3px; font-size: 13px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+      transition: all .25s;
+    }
+    .btn-outline-dark:hover { color: var(--orange); border-color: var(--orange); }
+
+    .hero-stats-row {
+      display: flex; gap: 48px; margin-top: 64px; padding-top: 40px;
+      border-top: 1px solid rgba(0,0,0,.1);
+      animation: fadeUp .7s .4s ease both;
+    }
+    .hs { }
+    .hs-n {
+      font-family: var(--serif); font-size: 44px; font-weight: 700; line-height: 1;
+      color: var(--black);
+    }
+    .hs-n span { color: var(--orange); }
+    .hs-l { font-size: 12px; color: var(--gray); margin-top: 4px; letter-spacing: .5px; }
+
+    .hero-right {
+      position: relative; overflow: hidden;
+      animation: fadeRight .9s .15s ease both;
+    }
+    .hero-right-img {
+      position: absolute; inset: 0;
+      background: var(--cream2);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px;
+    }
+    .hero-right-img::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(224,92,42,.04) 0%, transparent 60%);
+    }
+    .hero-img-placeholder { font-size: 100px; opacity: .4; position: relative; z-index: 1; }
+    .hero-img-label {
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gray); position: relative; z-index: 1;
+    }
+    .hero-right-tag {
+      position: absolute; bottom: 48px; left: -20px; z-index: 10;
+      background: var(--orange); color: var(--white);
+      padding: 20px 28px; border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(224,92,42,.35);
+    }
+    .hero-right-tag .n { font-family: var(--serif); font-size: 38px; font-weight: 700; line-height: 1; }
+    .hero-right-tag .l { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; opacity: .85; }
+
+    .hero-scroll-hint {
+      position: absolute; bottom: 36px; left: 64px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray);
+      animation: fadeUp .7s .6s ease both; z-index: 5;
+    }
+    .hero-scroll-hint::before {
+      content: ''; width: 1px; height: 48px; background: var(--gray);
+      animation: lineDown 2s ease-in-out infinite;
+    }
+    @keyframes lineDown { 0%,100% { height: 48px; } 50% { height: 24px; } }
+
+    @keyframes fadeUp   { from { opacity:0; transform: translateY(28px); } to { opacity:1; transform: none; } }
+    @keyframes fadeRight{ from { opacity:0; transform: translateX(36px); } to { opacity:1; transform: none; } }
+
+    /* ── MARQUEE ── */
+    .marquee {
+      background: var(--black); overflow: hidden; padding: 16px 0;
+    }
+    .marquee-track {
+      display: flex; width: max-content;
+      animation: scroll 20s linear infinite;
+    }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+    .marquee-item {
+      padding: 0 40px;
+      font-family: var(--serif); font-style: italic; font-size: 20px;
+      color: rgba(255,255,255,.6); white-space: nowrap;
+      display: flex; align-items: center; gap: 40px;
+    }
+    .marquee-item::after { content: '✦'; color: var(--orange); font-size: 12px; font-style: normal; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 64px; }
+    .tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .tag::before { content: ''; width: 32px; height: 1px; background: var(--orange); }
+    .section-h {
+      font-family: var(--serif); font-size: clamp(40px, 5vw, 72px);
+      line-height: 1.05; font-weight: 900; color: var(--black);
+    }
+    .section-h em { font-style: italic; color: var(--orange); }
+
+    /* ── ABOUT ── */
+    #about { background: var(--white); }
+    .about-wrap {
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 100px; align-items: center;
+      margin-top: 64px;
+    }
+    .about-img-stack { position: relative; height: 560px; }
+    .about-img-main {
+      position: absolute; top: 0; left: 0; right: 40px; bottom: 40px;
+      background: var(--cream2); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;
+      font-size: 64px; overflow: hidden;
+    }
+    .about-img-main::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(224,92,42,.08) 100%);
+    }
+    .about-img-back {
+      position: absolute; bottom: 0; right: 0; width: 200px; height: 240px;
+      background: var(--orange); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      gap: 6px; color: var(--white); padding: 24px;
+    }
+    .about-img-back .n { font-family: var(--serif); font-size: 52px; font-weight: 700; line-height: 1; }
+    .about-img-back .l { font-size: 13px; font-weight: 500; text-align: center; line-height: 1.4; }
+    .about-text .tag { margin-bottom: 12px; }
+    .about-text h2 { margin-bottom: 28px; }
+    .about-text p {
+      font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 20px;
+    }
+    .about-text p strong { color: var(--black); font-weight: 600; }
+    .about-certs {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px;
+    }
+    .cert {
+      background: var(--cream); border: 1px solid rgba(0,0,0,.1);
+      padding: 7px 16px; border-radius: 2px;
+      font-size: 12px; font-weight: 500; color: var(--charcoal); letter-spacing: .3px;
+      transition: all .2s;
+    }
+    .cert:hover { background: var(--orange); color: var(--white); border-color: var(--orange); }
+
+    /* ── SERVICES ── */
+    #servicos { background: var(--cream); }
+    .services-intro {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 64px;
+    }
+    .services-intro p {
+      max-width: 320px; font-size: 15px; color: var(--gray);
+      line-height: 1.8; font-weight: 300;
+    }
+    .services-list { display: flex; flex-direction: column; }
+    .service-row {
+      display: grid; grid-template-columns: 60px 1fr 200px 120px;
+      align-items: center; gap: 32px;
+      padding: 32px 0; border-top: 1px solid rgba(0,0,0,.1);
+      transition: all .3s; cursor: default;
+    }
+    .service-row:last-child { border-bottom: 1px solid rgba(0,0,0,.1); }
+    .service-row:hover { padding-left: 12px; }
+    .service-row:hover .sr-num { color: var(--orange); }
+    .sr-num {
+      font-family: var(--serif); font-size: 18px; font-weight: 700;
+      color: rgba(0,0,0,.2); transition: color .3s;
+    }
+    .sr-info h3 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+    .sr-info p { font-size: 14px; color: var(--gray); font-weight: 300; }
+    .sr-tag {
+      background: var(--cream2); padding: 6px 16px; border-radius: 50px;
+      font-size: 12px; font-weight: 500; color: var(--charcoal);
+      text-align: center; letter-spacing: .5px;
+    }
+    .sr-arrow {
+      width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; transition: all .3s; justify-self: end;
+    }
+    .service-row:hover .sr-arrow {
+      background: var(--orange); border-color: var(--orange); color: var(--white);
+    }
+
+    /* ── PROCESS ── */
+    #processo { background: var(--black); }
+    #processo .tag { color: var(--orange); }
+    #processo .tag::before { background: var(--orange); }
+    #processo .section-h { color: var(--white); }
+    .process-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; margin-top: 72px;
+      background: rgba(255,255,255,.08);
+      border-radius: 4px; overflow: hidden;
+    }
+    .process-card {
+      background: var(--black); padding: 48px 36px;
+      transition: background .3s; position: relative; overflow: hidden;
+    }
+    .process-card:hover { background: #1a1a1a; }
+    .process-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--orange); transform: scaleX(0); transform-origin: left;
+      transition: transform .4s;
+    }
+    .process-card:hover::after { transform: scaleX(1); }
+    .pc-num {
+      font-family: var(--serif); font-size: 72px; font-weight: 900;
+      color: rgba(255,255,255,.06); line-height: 1; margin-bottom: 24px;
+    }
+    .pc-icon { font-size: 32px; margin-bottom: 20px; display: block; }
+    .process-card h4 { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 14px; }
+    .process-card p { font-size: 14px; color: rgba(255,255,255,.45); line-height: 1.75; font-weight: 300; }
+
+    /* ── PLANS ── */
+    #planos { background: var(--cream2); }
+    .plans-intro { max-width: 600px; margin-bottom: 64px; }
+    .plans-intro p { font-size: 16px; color: var(--gray); margin-top: 20px; font-weight: 300; line-height: 1.75; }
+    .plans-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .plan {
+      background: var(--white); border-radius: 4px;
+      padding: 48px 36px; position: relative; overflow: hidden;
+      border: 1.5px solid transparent;
+      transition: all .3s;
+    }
+    .plan:hover { transform: translateY(-6px); box-shadow: 0 32px 80px rgba(0,0,0,.1); }
+    .plan.highlight { background: var(--orange); border-color: var(--orange); }
+    .plan.highlight:hover { box-shadow: 0 32px 80px rgba(224,92,42,.35); }
+    .plan-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gray); margin-bottom: 32px;
+    }
+    .plan.highlight .plan-label { color: rgba(255,255,255,.7); }
+    .plan-price {
+      font-family: var(--serif); font-size: 68px; font-weight: 900; line-height: 1;
+      color: var(--black); margin-bottom: 4px;
+    }
+    .plan.highlight .plan-price { color: var(--white); }
+    .plan-period { font-size: 13px; color: var(--gray); margin-bottom: 36px; }
+    .plan.highlight .plan-period { color: rgba(255,255,255,.65); }
+    .plan-sep { height: 1px; background: rgba(0,0,0,.08); margin-bottom: 32px; }
+    .plan.highlight .plan-sep { background: rgba(255,255,255,.2); }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
+    .plan-features li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 14px; color: #444; font-weight: 400; line-height: 1.5;
+    }
+    .plan.highlight .plan-features li { color: rgba(255,255,255,.85); }
+    .plan-features li::before { content: '—'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+    .plan.highlight .plan-features li::before { color: rgba(255,255,255,.7); }
+    .btn-plan-dark {
+      display: block; width: 100%; padding: 15px; text-align: center;
+      background: var(--black); color: var(--white); font-size: 13px;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all .25s; border: none; cursor: pointer;
+    }
+    .btn-plan-dark:hover { background: var(--orange); }
+    .plan.highlight .btn-plan-dark { background: var(--white); color: var(--orange); }
+    .plan.highlight .btn-plan-dark:hover { background: var(--black); color: var(--white); }
+    .plan-popular {
+      position: absolute; top: 24px; right: 24px;
+      background: rgba(255,255,255,.25); color: var(--white);
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 50px;
+    }
+
+    /* ── RESULTS ── */
+    #resultados { background: var(--white); }
+    .results-intro { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; }
+    .results-intro p { max-width: 300px; font-size: 15px; color: var(--gray); font-weight: 300; line-height: 1.8; }
+    .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--cream2); border-radius: 4px; overflow: hidden; }
+    .result-card { background: var(--white); padding: 36px 32px; transition: background .3s; }
+    .result-card:hover { background: var(--cream); }
+    .result-visual {
+      display: flex; height: 180px; border-radius: 4px; overflow: hidden; margin-bottom: 24px;
+    }
+    .rv-half {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+    }
+    .rv-half.bef { background: var(--cream2); }
+    .rv-half.aft { background: rgba(224,92,42,.08); }
+    .rv-half .emoji { font-size: 40px; }
+    .rv-half .lbl { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+    .rv-half.aft .lbl { color: var(--orange); }
+    .rv-divider { width: 2px; background: var(--cream2); }
+    .result-card h4 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+    .result-card p { font-size: 13px; color: var(--gray); font-weight: 300; margin-bottom: 14px; }
+    .result-chip {
+      display: inline-flex; align-items: center;
+      background: rgba(224,92,42,.1); color: var(--orange);
+      font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 50px;
+    }
+
+    /* ── TESTIMONIALS ── */
+    #depoimentos { background: var(--cream); }
+    .t-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 64px; }
+    .t-card {
+      background: var(--white); padding: 36px 32px; border-radius: 4px;
+      border: 1px solid rgba(0,0,0,.06); transition: all .3s;
+    }
+    .t-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,.08); }
+    .t-stars { color: var(--orange); letter-spacing: 2px; font-size: 14px; margin-bottom: 20px; }
+    .t-text {
+      font-size: 15px; color: #555; line-height: 1.8; font-weight: 300;
+      font-family: var(--serif); font-style: italic; margin-bottom: 28px;
+    }
+    .t-name { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+    .t-meta { font-size: 12px; color: var(--gray); }
+
+    /* ── CTA BANNER ── */
+    #cta {
+      background: var(--orange); padding: 100px 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 48px;
+    }
+    #cta h2 {
+      font-family: var(--serif); font-size: clamp(48px, 6vw, 88px);
+      font-weight: 900; line-height: 1; color: var(--white);
+    }
+    #cta h2 em { font-style: italic; }
+    .cta-right { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; flex-shrink: 0; }
+    .cta-right p { font-size: 17px; color: rgba(255,255,255,.8); font-weight: 300; max-width: 320px; line-height: 1.7; }
+    .btn-fill-white {
+      background: var(--white); color: var(--orange);
+      padding: 18px 40px; font-size: 14px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all .25s;
+    }
+    .btn-fill-white:hover { background: var(--black); color: var(--white); }
+
+    /* ── CONTACT ── */
+    #contacto { background: var(--white); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 96px; margin-top: 64px;
+    }
+    .contact-left h3 {
+      font-family: var(--serif); font-size: 36px; font-weight: 700; margin-bottom: 18px;
+    }
+    .contact-left p { font-size: 15px; color: var(--gray); line-height: 1.8; font-weight: 300; margin-bottom: 40px; }
+    .c-items { display: flex; flex-direction: column; gap: 24px; }
+    .c-item { display: flex; gap: 16px; align-items: flex-start; }
+    .c-icon {
+      width: 42px; height: 42px; background: var(--cream); border-radius: 2px;
+      display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+    }
+    .c-label { font-size: 11px; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .c-val { font-size: 15px; font-weight: 500; color: var(--black); }
+    .c-socials { display: flex; gap: 10px; margin-top: 36px; }
+    .c-social {
+      width: 40px; height: 40px; border-radius: 2px; border: 1px solid rgba(0,0,0,.12);
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+      text-decoration: none; transition: all .2s;
+    }
+    .c-social:hover { background: var(--orange); border-color: var(--orange); }
+    .contact-form { background: var(--cream); padding: 48px; border-radius: 4px; }
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .f-group { margin-bottom: 20px; }
+    .f-group label {
+      display: block; font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--gray); margin-bottom: 10px;
+    }
+    .f-group input, .f-group textarea, .f-group select {
+      width: 100%; background: var(--white); border: 1.5px solid rgba(0,0,0,.1);
+      border-radius: 2px; padding: 14px 16px; font-size: 15px; font-family: var(--sans);
+      color: var(--black); transition: border-color .2s; resize: none; appearance: none;
+    }
+    .f-group input:focus, .f-group textarea:focus, .f-group select:focus {
+      outline: none; border-color: var(--orange);
+    }
+    .f-group textarea { height: 110px; }
+    .f-group select option { background: var(--white); }
+    .f-submit {
+      width: 100%; padding: 16px; background: var(--orange); color: var(--white);
+      border: none; font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all .25s;
+    }
+    .f-submit:hover { background: var(--orange2); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black); color: rgba(255,255,255,.6); }
+    .footer-main {
+      display: flex; justify-content: space-between; gap: 60px; flex-wrap: wrap;
+      padding: 72px 64px 48px; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-brand { max-width: 280px; }
+    .footer-logo {
+      font-family: var(--serif); font-size: 26px; font-weight: 700;
+      color: var(--white); text-decoration: none; margin-bottom: 16px; display: block;
+    }
+    .footer-logo em { font-style: italic; color: var(--orange); }
+    .footer-brand p { font-size: 14px; line-height: 1.7; }
+    .footer-col h5 {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,.3); margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
+    .footer-col a:hover { color: var(--orange); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 64px; font-size: 13px;
+    }
+    .footer-bottom span { color: var(--orange); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: var(--cream); flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--serif); font-size: 40px; font-weight: 700; color: var(--black); text-decoration: none; transition: color .2s; }
+    .mobile-menu a:hover { color: var(--orange); }
+    .mobile-close { position: absolute; top: 24px; right: 24px; background: none; border: none; font-size: 28px; cursor: pointer; color: var(--black); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal-left.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      nav, nav.scrolled { padding: 20px 32px; }
+      section { padding: 80px 32px; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 140px 32px 80px; }
+      .about-wrap { grid-template-columns: 1fr; gap: 48px; }
+      .about-img-stack { height: 360px; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .plans-row { grid-template-columns: 1fr 1fr; }
+      .plans-row .plan:last-child { grid-column: span 2; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      #cta { flex-direction: column; }
+      .footer-main { padding: 48px 32px 36px; }
+      .footer-bottom { padding: 20px 32px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      nav { padding: 20px 24px; }
+      nav.scrolled { padding: 14px 24px; }
+      section { padding: 64px 24px; }
+      .hero-left { padding: 120px 24px 64px; }
+      .hero-stats-row { gap: 28px; }
+      .services-intro { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .service-row { grid-template-columns: 40px 1fr; }
+      .sr-tag, .sr-arrow { display: none; }
+      .process-grid { grid-template-columns: 1fr; }
+      .plans-row { grid-template-columns: 1fr; }
+      .plans-row .plan:last-child { grid-column: span 1; }
+      .results-grid { grid-template-columns: 1fr; }
+      .t-grid { grid-template-columns: 1fr; }
+      #cta { padding: 64px 24px; }
+      .contact-form { padding: 28px 24px; }
+      .f-row { grid-template-columns: 1fr; }
+      .footer-main { padding: 48px 24px 36px; gap: 36px; }
+      .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+      .results-intro { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Gerat <em>Fitness</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#planos">Planos</a></li>
+    <li><a href="#resultados">Resultados</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Consulta Gratuita</a>
+  <button class="hamburger" id="ham" aria-label="menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mob">
+  <button class="mobile-close" id="mobClose">✕</button>
+  <a href="#about" onclick="cm()">Sobre</a>
+  <a href="#servicos" onclick="cm()">Serviços</a>
+  <a href="#planos" onclick="cm()">Planos</a>
+  <a href="#resultados" onclick="cm()">Resultados</a>
+  <a href="#contacto" onclick="cm()">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Personal Trainer Certificado</div>
+    <h1 class="hero-title">
+      Treina.<br>
+      <span class="italic">Evolui.</span><br>
+      <span class="outline">Vence.</span>
+    </h1>
+    <p class="hero-desc">
+      O teu corpo é capaz de muito mais do que imaginas.
+      Com <strong>acompanhamento personalizado</strong>, vamos descobrir juntos o que és capaz.
+    </p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-fill">Começar Agora</a>
+      <a href="#servicos" class="btn-outline-dark">Ver Serviços</a>
+    </div>
+    <div class="hero-stats-row">
+      <div class="hs">
+        <div class="hs-n">200<span>+</span></div>
+        <div class="hs-l">Clientes Ativos</div>
+      </div>
+      <div class="hs">
+        <div class="hs-n">5<span>+</span></div>
+        <div class="hs-l">Anos Exp.</div>
+      </div>
+      <div class="hs">
+        <div class="hs-n">98<span>%</span></div>
+        <div class="hs-l">Satisfação</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-img">
+      <div class="hero-img-placeholder">🏋️</div>
+      <div class="hero-img-label">Foto do Treinador</div>
+    </div>
+    <div class="hero-right-tag">
+      <div class="n">5★</div>
+      <div class="l">Avaliação<br>Média</div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Perda de Peso</span>
+    <span class="marquee-item">Hipertrofia</span>
+    <span class="marquee-item">Nutrição</span>
+    <span class="marquee-item">Coaching Online</span>
+    <span class="marquee-item">Treino Funcional</span>
+    <span class="marquee-item">Força & Resistência</span>
+    <span class="marquee-item">Resultados Reais</span>
+    <span class="marquee-item">Perda de Peso</span>
+    <span class="marquee-item">Hipertrofia</span>
+    <span class="marquee-item">Nutrição</span>
+    <span class="marquee-item">Coaching Online</span>
+    <span class="marquee-item">Treino Funcional</span>
+    <span class="marquee-item">Força & Resistência</span>
+    <span class="marquee-item">Resultados Reais</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="tag">Sobre Mim</div>
+  <div class="about-wrap">
+    <div class="about-img-stack reveal-left">
+      <div class="about-img-main">
+        <span style="font-size:72px;opacity:.35;">💪</span>
+        <span style="font-size:12px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;">Foto Profissional</span>
+      </div>
+      <div class="about-img-back">
+        <div class="n">5+</div>
+        <div class="l">Anos de<br>Experiência</div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <div class="tag">O Teu Treinador</div>
+      <h2 class="section-h">Olá, sou o<br><em>Gerat</em></h2>
+      <p>
+        Sou personal trainer certificado com mais de 5 anos de experiência a transformar vidas. <strong>A minha filosofia é simples:</strong> o exercício deve encaixar na tua vida, não o contrário.
+      </p>
+      <p>
+        Não tenho clientes, tenho pessoas. Cada programa que crio é construído do zero para ti — os teus objetivos, os teus limites, o teu ritmo. Sou aquele que não te deixa desistir, mas também não te força além do que é saudável.
+      </p>
+      <p>
+        Trabalho com pessoas que querem <strong>resultados reais e duradouros</strong> — sem milagres, sem atalhos, apenas ciência e dedicação.
+      </p>
+      <div class="about-certs">
+        <span class="cert">CREF Certificado</span>
+        <span class="cert">Nutrição Desportiva</span>
+        <span class="cert">Treino Funcional</span>
+        <span class="cert">Coaching Online</span>
+        <span class="cert">Reabilitação</span>
+        <span class="cert">Personal Training</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="servicos">
+  <div class="services-intro">
+    <div>
+      <div class="tag">O que ofereço</div>
+      <h2 class="section-h">Serviços <em>para ti</em></h2>
+    </div>
+    <p class="reveal">Cada serviço é desenhado para se adaptar ao teu estilo de vida e objetivos específicos.</p>
+  </div>
+  <div class="services-list reveal">
+    <div class="service-row">
+      <div class="sr-num">01</div>
+      <div class="sr-info">
+        <h3>Treino Presencial</h3>
+        <p>Sessões individuais com acompanhamento completo, correção postural e progressão estruturada.</p>
+      </div>
+      <div class="sr-tag">Ginásio</div>
+      <div class="sr-arrow">→</div>
+    </div>
+    <div class="service-row">
+      <div class="sr-num">02</div>
+      <div class="sr-info">
+        <h3>Coaching Online</h3>
+        <p>Programa semanal com vídeos, app de treino e check-ins regulares. Treina onde quiseres.</p>
+      </div>
+      <div class="sr-tag">100% Online</div>
+      <div class="sr-arrow">→</div>
+    </div>
+    <div class="service-row">
+      <div class="sr-num">03</div>
+      <div class="sr-info">
+        <h3>Plano Nutricional</h3>
+        <p>Estratégia alimentar personalizada ao teu estilo de vida, preferências e objetivos.</p>
+      </div>
+      <div class="sr-tag">Nutrição</div>
+      <div class="sr-arrow">→</div>
+    </div>
+    <div class="service-row">
+      <div class="sr-num">04</div>
+      <div class="sr-info">
+        <h3>Treino em Casa</h3>
+        <p>Programas eficazes sem equipamento, adaptados ao espaço e materiais que tens em casa.</p>
+      </div>
+      <div class="sr-tag">Casa</div>
+      <div class="sr-arrow">→</div>
+    </div>
+    <div class="service-row">
+      <div class="sr-num">05</div>
+      <div class="sr-info">
+        <h3>Avaliação Física</h3>
+        <p>Análise completa da composição corporal para definir o ponto de partida e acompanhar a evolução.</p>
+      </div>
+      <div class="sr-tag">Avaliação</div>
+      <div class="sr-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="processo">
+  <div class="tag">Como Funciona</div>
+  <h2 class="section-h" style="color:var(--white);">O meu <em>Método</em></h2>
+  <div class="process-grid">
+    <div class="process-card reveal">
+      <div class="pc-num">01</div>
+      <span class="pc-icon">🔍</span>
+      <h4>Avaliação Inicial</h4>
+      <p>Análise completa do teu estado físico, historial de saúde, objetivos e estilo de vida. A base do teu programa.</p>
+    </div>
+    <div class="process-card reveal">
+      <div class="pc-num">02</div>
+      <span class="pc-icon">📋</span>
+      <h4>Plano Personalizado</h4>
+      <p>Criação de um programa de treino e nutrição 100% adaptado a ti. Sem cópias. Sem fórmulas genéricas.</p>
+    </div>
+    <div class="process-card reveal">
+      <div class="pc-num">03</div>
+      <span class="pc-icon">🔥</span>
+      <h4>Execução & Suporte</h4>
+      <p>Acompanhamento constante, ajustes em tempo real e suporte diário para que nunca te sintas sozinho.</p>
+    </div>
+    <div class="process-card reveal">
+      <div class="pc-num">04</div>
+      <span class="pc-icon">📈</span>
+      <h4>Evolução Contínua</h4>
+      <p>Reavaliações periódicas e progressão constante. Os resultados continuam a aparecer semana após semana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="planos">
+  <div class="plans-intro reveal">
+    <div class="tag">Investimento</div>
+    <h2 class="section-h">Escolhe o teu <em>Plano</em></h2>
+    <p>Todos os planos incluem avaliação física gratuita e 7 dias de experiência sem qualquer compromisso.</p>
+  </div>
+  <div class="plans-row">
+    <div class="plan reveal">
+      <div class="plan-label">Starter</div>
+      <div class="plan-price">49€</div>
+      <div class="plan-period">por mês</div>
+      <div class="plan-sep"></div>
+      <ul class="plan-features">
+        <li>Programa de treino mensal</li>
+        <li>Acesso à app de treino</li>
+        <li>1 check-in semanal</li>
+        <li>Biblioteca de exercícios</li>
+        <li>Suporte via mensagem</li>
+      </ul>
+      <a href="#contacto" class="btn-plan-dark">Começar</a>
+    </div>
+    <div class="plan highlight reveal">
+      <div class="plan-popular">Mais Popular</div>
+      <div class="plan-label">Pro</div>
+      <div class="plan-price">89€</div>
+      <div class="plan-period">por mês</div>
+      <div class="plan-sep"></div>
+      <ul class="plan-features">
+        <li>Programa semanal adaptado</li>
+        <li>Plano nutricional completo</li>
+        <li>Check-ins 3x por semana</li>
+        <li>Análise de vídeo dos treinos</li>
+        <li>Suporte prioritário 24/7</li>
+        <li>Avaliação mensal completa</li>
+      </ul>
+      <a href="#contacto" class="btn-plan-dark">Escolher Pro</a>
+    </div>
+    <div class="plan reveal">
+      <div class="plan-label">Elite</div>
+      <div class="plan-price">149€</div>
+      <div class="plan-period">por mês</div>
+      <div class="plan-sep"></div>
+      <ul class="plan-features">
+        <li>4 sessões presenciais/mês</li>
+        <li>Programa & nutrição full</li>
+        <li>Acompanhamento diário</li>
+        <li>Acesso direto ao treinador</li>
+        <li>Suplementação orientada</li>
+        <li>Análise corporal mensal</li>
+        <li>Conteúdo exclusivo</li>
+      </ul>
+      <a href="#contacto" class="btn-plan-dark">Escolher Elite</a>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="resultados">
+  <div class="results-intro">
+    <div class="reveal">
+      <div class="tag">Transformações</div>
+      <h2 class="section-h">Resultados <em>Reais</em></h2>
+    </div>
+    <p class="reveal">Histórias verdadeiras de pessoas reais que mudaram as suas vidas.</p>
+  </div>
+  <div class="results-grid">
+    <div class="result-card reveal">
+      <div class="result-visual">
+        <div class="rv-half bef"><span class="emoji">🙁</span><span class="lbl">Antes</span></div>
+        <div class="rv-divider"></div>
+        <div class="rv-half aft"><span class="emoji">💪</span><span class="lbl">Depois</span></div>
+      </div>
+      <h4>Miguel S. — Perda de Peso</h4>
+      <p>Transformação em 4 meses de treino e nutrição</p>
+      <span class="result-chip">↓ 18kg em 16 semanas</span>
+    </div>
+    <div class="result-card reveal">
+      <div class="result-visual">
+        <div class="rv-half bef"><span class="emoji">😔</span><span class="lbl">Antes</span></div>
+        <div class="rv-divider"></div>
+        <div class="rv-half aft"><span class="emoji">🔥</span><span class="lbl">Depois</span></div>
+      </div>
+      <h4>Ana P. — Hipertrofia</h4>
+      <p>Ganho de massa muscular com plano personalizado</p>
+      <span class="result-chip">+8kg massa muscular em 6m</span>
+    </div>
+    <div class="result-card reveal">
+      <div class="result-visual">
+        <div class="rv-half bef"><span class="emoji">😤</span><span class="lbl">Antes</span></div>
+        <div class="rv-divider"></div>
+        <div class="rv-half aft"><span class="emoji">🏆</span><span class="lbl">Depois</span></div>
+      </div>
+      <h4>João R. — Condição Física</h4>
+      <p>De sedentário a atleta em 5 meses de coaching</p>
+      <span class="result-chip">5km corridos + 40kg bench</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="depoimentos">
+  <div class="tag reveal">Depoimentos</div>
+  <h2 class="section-h reveal">O que dizem os<br>meus <em>Clientes</em></h2>
+  <div class="t-grid">
+    <div class="t-card reveal">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"O Gerat mudou completamente a minha relação com o exercício. É mesmo um chato persistente no bom sentido! Em 3 meses perdi 12kg e sinto-me uma pessoa nova."</p>
+      <div class="t-name">Carlos M.</div>
+      <div class="t-meta">Cliente há 8 meses · Lisboa</div>
+    </div>
+    <div class="t-card reveal">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Trabalho com ele online e é incrível como consegue acompanhar tudo à distância. Os check-ins são constantes e o programa muda sempre que precisa."</p>
+      <div class="t-name">Sara L.</div>
+      <div class="t-meta">Cliente há 5 meses · Porto</div>
+    </div>
+    <div class="t-card reveal">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Tinha um ginásio há 3 anos e ia raramente. O Gerat tornou-se a razão para eu ir. O melhor investimento que fiz na minha saúde."</p>
+      <div class="t-name">Rui T.</div>
+      <div class="t-meta">Cliente há 1 ano · Faro</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="reveal">Pronto para<br><em>mudar?</em></h2>
+  <div class="cta-right reveal">
+    <p>A primeira consulta é gratuita e sem compromisso. Basta dar o primeiro passo — o mais difícil.</p>
+    <a href="#contacto" class="btn-fill-white">Marcar Consulta Grátis</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contacto">
+  <div class="tag">Contacto</div>
+  <h2 class="section-h">Vamos <em>conversar</em></h2>
+  <div class="contact-grid">
+    <div class="contact-left reveal">
+      <h3>Entra em contacto</h3>
+      <p>Preenche o formulário ou fala diretamente comigo. Respondo em menos de 24h.</p>
+      <div class="c-items">
+        <div class="c-item">
+          <div class="c-icon">📍</div>
+          <div><div class="c-label">Localização</div><div class="c-val">Portugal · Online & Presencial</div></div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">📱</div>
+          <div><div class="c-label">WhatsApp</div><div class="c-val">+351 000 000 000</div></div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">✉️</div>
+          <div><div class="c-label">Email</div><div class="c-val">gerat@personaltrainer.pt</div></div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">🕐</div>
+          <div><div class="c-label">Horário</div><div class="c-val">Seg–Sáb, 7h–21h</div></div>
+        </div>
+      </div>
+      <div class="c-socials">
+        <a href="#" class="c-social" title="Instagram">📸</a>
+        <a href="#" class="c-social" title="Facebook">📘</a>
+        <a href="#" class="c-social" title="YouTube">▶️</a>
+        <a href="#" class="c-social" title="TikTok">🎵</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="contact-form">
+        <div class="f-row">
+          <div class="f-group"><label>Nome</label><input type="text" placeholder="O teu nome" /></div>
+          <div class="f-group"><label>Contacto</label><input type="text" placeholder="Telefone ou email" /></div>
+        </div>
+        <div class="f-group">
+          <label>Objetivo</label>
+          <select>
+            <option value="" disabled selected>Seleciona o teu objetivo</option>
+            <option>Perder Peso</option>
+            <option>Ganhar Massa Muscular</option>
+            <option>Melhorar Condição Física</option>
+            <option>Reabilitação</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label>Modalidade</label>
+          <select>
+            <option value="" disabled selected>Presencial ou Online?</option>
+            <option>Treino Presencial</option>
+            <option>Coaching Online</option>
+            <option>Treino em Casa</option>
+            <option>Ainda não sei</option>
+          </select>
+        </div>
+        <div class="f-group"><label>Mensagem</label><textarea placeholder="Conta-me um pouco sobre ti..."></textarea></div>
+        <button class="f-submit" id="fsub">Enviar Mensagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <a href="#hero" class="footer-logo">Gerat <em>Fitness</em></a>
+      <p>Personal trainer certificado — aqui para te fazer ir ao ginásio, mesmo quando não apetece.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navegação</h5>
+      <ul>
+        <li><a href="#about">Sobre Mim</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#processo">Método</a></li>
+        <li><a href="#planos">Planos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Serviços</h5>
+      <ul>
+        <li><a href="#servicos">Treino Presencial</a></li>
+        <li><a href="#servicos">Coaching Online</a></li>
+        <li><a href="#servicos">Plano Nutricional</a></li>
+        <li><a href="#servicos">Avaliação Física</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contacto</h5>
+      <ul>
+        <li><a href="mailto:gerat@personaltrainer.pt">gerat@personaltrainer.pt</a></li>
+        <li><a href="tel:+351000000000">+351 000 000 000</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 <span>Gerat Fitness</span>. Todos os direitos reservados.</span>
+    <span>Feito com <span>♥</span> em Portugal</span>
+  </div>
+</footer>
+
+<script>
+  // nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+  // mobile
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mob');
+  document.getElementById('mobClose').addEventListener('click', () => mob.classList.remove('open'));
+  ham.addEventListener('click', () => mob.classList.add('open'));
+  function cm() { mob.classList.remove('open'); }
+
+  // reveal
+  const obs = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  }), { threshold: .1, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left').forEach(el => obs.observe(el));
+
+  // smooth scroll offset
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' }); }
+    });
+  });
+
+  // form
+  document.getElementById('fsub').addEventListener('click', function(e) {
+    e.preventDefault();
+    this.textContent = '✓ Enviado — até breve!';
+    this.style.background = '#2A9D5A';
+    setTimeout(() => { this.textContent = 'Enviar Mensagem'; this.style.background = ''; }, 3000);
+  });
+</script>
+</body>
+</html>
