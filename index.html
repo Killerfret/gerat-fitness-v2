@@ -689,6 +689,66 @@
     }
     .plans-note strong { color: var(--charcoal); font-weight: 600; }
 
+    /* Billing policy explainer */
+    .billing-policy {
+      margin-top: 80px; padding: 48px 40px;
+      background: var(--white); border-radius: 4px;
+      border: 1px solid var(--line);
+    }
+    .billing-policy-head {
+      display: flex; align-items: baseline; gap: 16px; margin-bottom: 32px;
+    }
+    .billing-policy-head .tag { margin: 0; }
+    .billing-policy-head h3 {
+      font-family: var(--serif); font-size: 28px; font-weight: 700;
+      color: var(--black); line-height: 1.2;
+    }
+    .billing-policy-head h3 em { font-style: italic; color: var(--orange); }
+    .bp-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--line);
+      border: 1px solid var(--line); border-radius: 4px; overflow: hidden;
+    }
+    .bp-card {
+      background: var(--white); padding: 32px 28px;
+      display: flex; flex-direction: column; gap: 8px;
+      transition: background .25s;
+    }
+    .bp-card:hover { background: var(--cream); }
+    .bp-pct {
+      font-family: var(--serif); font-size: 44px; font-weight: 900; line-height: 1;
+      color: var(--black);
+    }
+    .bp-card.full .bp-pct { color: var(--orange); }
+    .bp-when {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--orange); margin-top: 12px;
+    }
+    .bp-desc { font-size: 14px; color: var(--gray); line-height: 1.65; font-weight: 300; }
+    .bp-foot {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line);
+    }
+    .bp-item {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 13px; color: var(--charcoal); line-height: 1.6;
+    }
+    .bp-item::before {
+      content: ''; flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+      background: var(--orange);
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+      background-size: 12px 12px; background-repeat: no-repeat; background-position: center;
+      margin-top: 1px;
+    }
+    .bp-item strong { color: var(--black); font-weight: 600; }
+
+    @media (max-width: 1024px) {
+      .billing-policy { padding: 36px 28px; }
+      .bp-grid { grid-template-columns: 1fr; }
+      .bp-foot { grid-template-columns: 1fr; gap: 16px; padding-top: 20px; margin-top: 24px; }
+      .billing-policy-head { flex-direction: column; gap: 8px; }
+    }
+
     /* ARTICLES */
     #artigos { background: var(--cream); }
     .art-intro { max-width: 600px; margin-bottom: 64px; }
@@ -1058,9 +1118,6 @@
       <button class="bt-btn" data-billing="quarterly"><span data-i18n="bt.quarter">Trimestral</span><span class="bt-save">-10%</span></button>
       <button class="bt-btn" data-billing="yearly"><span data-i18n="bt.year">Anual</span><span class="bt-save">-20%</span></button>
     </div>
-    <p class="plans-note">
-      <span data-i18n="plans.note.a">Planos trimestrais e anuais com </span><strong data-i18n="plans.note.b">pré-aviso de cancelamento de 1 mês</strong><span data-i18n="plans.note.c">. Reembolso proporcional dos meses não utilizados.</span>
-    </p>
   </div>
   <div class="plans-row">
     <div class="plan reveal">
@@ -1108,6 +1165,43 @@
         <li data-i18n="pe.7">Conteúdo exclusivo</li>
       </ul>
       <a href="#contacto" class="btn-plan-dark" data-plan="elite" data-i18n="pe.btn">Escolher Elite</a>
+    </div>
+  </div>
+
+  <div class="billing-policy reveal">
+    <div class="billing-policy-head">
+      <div class="tag" data-i18n="bp.tag">Como funciona</div>
+      <h3><span data-i18n="bp.h1">Cancela quando quiseres,</span> <em data-i18n="bp.h2">mantens o que mereceste.</em></h3>
+    </div>
+
+    <div class="bp-grid">
+      <div class="bp-card">
+        <div class="bp-pct">0%</div>
+        <div class="bp-when" data-i18n="bp.when1">Menos de 3 meses</div>
+        <div class="bp-desc" data-i18n="bp.desc1">Sem desconto. Pagas o valor mensal padrão pelos meses utilizados, o restante é devolvido.</div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-pct">-10%</div>
+        <div class="bp-when" data-i18n="bp.when2">Entre 3 e 12 meses</div>
+        <div class="bp-desc" data-i18n="bp.desc2">Mantens dez por cento de desconto. Provaste a tua dedicação, o desconto fica contigo.</div>
+      </div>
+      <div class="bp-card full">
+        <div class="bp-pct">-20%</div>
+        <div class="bp-when" data-i18n="bp.when3">Ano completo</div>
+        <div class="bp-desc" data-i18n="bp.desc3">Desconto completo de vinte por cento. Investiste no longo prazo, recebes o melhor preço.</div>
+      </div>
+    </div>
+
+    <div class="bp-foot">
+      <div class="bp-item">
+        <span><strong data-i18n="bp.f1.h">7 dias de teste</strong> <span data-i18n="bp.f1.d">sem compromisso. Não gostas, devolvemos tudo.</span></span>
+      </div>
+      <div class="bp-item">
+        <span><strong data-i18n="bp.f2.h">1 mês de pré-aviso</strong> <span data-i18n="bp.f2.d">para cancelar. Avisas e processamos o reembolso.</span></span>
+      </div>
+      <div class="bp-item">
+        <span><strong data-i18n="bp.f3.h">€25 setup</strong> <span data-i18n="bp.f3.d">único nos planos trimestral e anual. Cobre o tempo de onboarding.</span></span>
+      </div>
     </div>
   </div>
 </section>
@@ -1334,6 +1428,13 @@
       'faq.5.q':'Tenho de ir a um ginásio específico?','faq.5.a':'Não. Treinas onde quiseres: ginásio à tua escolha, em casa, ao ar livre. Os programas adaptam-se ao espaço e equipamento.',
       'faq.6.q':'E se não gostar ou quiser cancelar?','faq.6.a':'Tens 7 dias de experiência sem compromisso para começares. Os planos trimestrais e anuais incluem uma taxa de setup única de €25 (não reembolsável) e exigem pré-aviso de cancelamento de 1 mês. Em caso de cancelamento antecipado, mantens parte do desconto consoante o tempo que ficaste: menos de 3 meses sem desconto (valor mensal cheio), entre 3 e 12 meses mantens -10%, ao completar 12 meses recebes os -20% completos. O restante é devolvido. Exemplo: cancelas o anual após 6 meses, és cobrado pelos 6 meses com -10% de desconto e recebes o resto de volta.',
       'plans.note.a':'Trimestral e anual: taxa de setup única de ','plans.note.b':'€25','plans.note.c':' e pré-aviso de 1 mês. Em caso de cancelamento antecipado mantens parte do desconto: menos de 3 meses sem desconto, entre 3 e 12 meses mantens -10%, 12 meses completos mantens -20%. Restante devolvido.',
+      'bp.tag':'Como funciona','bp.h1':'Cancela quando quiseres,','bp.h2':'mantens o que mereceste.',
+      'bp.when1':'Menos de 3 meses','bp.desc1':'Sem desconto. Pagas o valor mensal padrão pelos meses utilizados, o restante é devolvido.',
+      'bp.when2':'Entre 3 e 12 meses','bp.desc2':'Mantens dez por cento de desconto. Provaste a tua dedicação, o desconto fica contigo.',
+      'bp.when3':'Ano completo','bp.desc3':'Desconto completo de vinte por cento. Investiste no longo prazo, recebes o melhor preço.',
+      'bp.f1.h':'7 dias de teste','bp.f1.d':'sem compromisso. Não gostas, devolvemos tudo.',
+      'bp.f2.h':'1 mês de pré-aviso','bp.f2.d':'para cancelar. Avisas e processamos o reembolso.',
+      'bp.f3.h':'€25 setup','bp.f3.d':'único nos planos trimestral e anual. Cobre o tempo de onboarding.',
       'ps.1':'Programa de treino mensal','ps.2':'Acesso à app de treino','ps.3':'1 check-in semanal','ps.4':'Biblioteca de exercícios','ps.5':'Suporte via mensagem','ps.btn':'Começar',
       'pp.1':'Programa semanal adaptado','pp.2':'Plano nutricional completo','pp.3':'Check-ins 3x por semana','pp.4':'Análise de vídeo dos treinos','pp.5':'Suporte prioritário 24/7','pp.6':'Avaliação mensal completa','pp.btn':'Escolher Pro',
       'pe.1':'4 sessões presenciais por mês','pe.2':'Programa e nutrição completos','pe.3':'Acompanhamento diário','pe.4':'Acesso direto ao treinador','pe.5':'Suplementação orientada','pe.6':'Análise corporal mensal','pe.7':'Conteúdo exclusivo','pe.btn':'Escolher Elite',
@@ -1393,6 +1494,13 @@
       'faq.5.q':'Do I need to go to a specific gym?','faq.5.a':'No. Train wherever you want: any gym, at home, outdoors. Programs adapt to your space and equipment.',
       'faq.6.q':'What if I do not like it or want to cancel?','faq.6.a':'You get a 7-day trial with no commitment to start. Quarterly and yearly plans include a one-time €25 setup fee (non-refundable) and require 1 month cancellation notice. On early cancellation, you keep part of the discount based on how long you stayed: under 3 months no discount (full monthly rate), between 3 and 12 months you keep -10%, complete 12 months and you keep the full -20%. The rest is refunded. Example: cancel the yearly plan after 6 months, you are billed for those 6 months with -10% discount and get the remainder back.',
       'plans.note.a':'Quarterly and yearly: one-time setup fee of ','plans.note.b':'€25','plans.note.c':' and 1 month cancellation notice. On early cancellation you keep part of the discount: under 3 months no discount, between 3 and 12 months you keep -10%, complete 12 months you keep the full -20%. Remainder refunded.',
+      'bp.tag':'How it works','bp.h1':'Cancel anytime,','bp.h2':'keep what you earned.',
+      'bp.when1':'Under 3 months','bp.desc1':'No discount. You pay the standard monthly rate for used months, the rest is refunded.',
+      'bp.when2':'Between 3 and 12 months','bp.desc2':'Keep ten percent off. You proved your commitment, the discount stays with you.',
+      'bp.when3':'Full year','bp.desc3':'Full twenty percent discount. You invested for the long run, you get the best price.',
+      'bp.f1.h':'7-day trial','bp.f1.d':'no commitment. Not for you, full refund.',
+      'bp.f2.h':'1 month notice','bp.f2.d':'to cancel. Let us know and we process the refund.',
+      'bp.f3.h':'€25 setup','bp.f3.d':'one-time on quarterly and yearly plans. Covers onboarding time.',
       'ps.1':'Monthly training program','ps.2':'Access to training app','ps.3':'1 check-in per week','ps.4':'Exercise library','ps.5':'Message support','ps.btn':'Start',
       'pp.1':'Adapted weekly program','pp.2':'Full nutrition plan','pp.3':'Check-ins 3x per week','pp.4':'Training video analysis','pp.5':'Priority 24/7 support','pp.6':'Full monthly assessment','pp.btn':'Choose Pro',
       'pe.1':'4 in-person sessions per month','pe.2':'Full program and nutrition','pe.3':'Daily guidance','pe.4':'Direct trainer access','pe.5':'Guided supplementation','pe.6':'Monthly body analysis','pe.7':'Exclusive content','pe.btn':'Choose Elite',
@@ -1452,6 +1560,13 @@
       'faq.5.q':'¿Tengo que ir a un gimnasio específico?','faq.5.a':'No. Entrenas donde quieras: cualquier gimnasio, en casa, al aire libre. Los programas se adaptan al espacio y equipamiento.',
       'faq.6.q':'¿Y si no me gusta o quiero cancelar?','faq.6.a':'Tienes 7 días de prueba sin compromiso para empezar. Los planes trimestral y anual incluyen una tarifa de setup única de €25 (no reembolsable) y requieren 1 mes de preaviso de cancelación. En caso de cancelación anticipada, mantienes parte del descuento según el tiempo que te quedaste: menos de 3 meses sin descuento (valor mensual completo), entre 3 y 12 meses mantienes -10%, al completar 12 meses recibes el -20% completo. El resto se reembolsa. Ejemplo: cancelas el anual después de 6 meses, se cobran esos 6 meses con -10% de descuento y recibes el resto.',
       'plans.note.a':'Trimestral y anual: tarifa de setup única de ','plans.note.b':'€25','plans.note.c':' y 1 mes de preaviso. En caso de cancelación anticipada mantienes parte del descuento: menos de 3 meses sin descuento, entre 3 y 12 meses mantienes -10%, 12 meses completos mantienes -20%. El resto se reembolsa.',
+      'bp.tag':'Cómo funciona','bp.h1':'Cancela cuando quieras,','bp.h2':'mantienes lo que mereciste.',
+      'bp.when1':'Menos de 3 meses','bp.desc1':'Sin descuento. Pagas el valor mensual estándar por los meses utilizados, el resto se reembolsa.',
+      'bp.when2':'Entre 3 y 12 meses','bp.desc2':'Mantienes diez por ciento de descuento. Demostraste tu dedicación, el descuento se queda contigo.',
+      'bp.when3':'Año completo','bp.desc3':'Descuento completo del veinte por ciento. Invertiste a largo plazo, recibes el mejor precio.',
+      'bp.f1.h':'7 días de prueba','bp.f1.d':'sin compromiso. Si no te gusta, devolvemos todo.',
+      'bp.f2.h':'1 mes de preaviso','bp.f2.d':'para cancelar. Avisas y procesamos el reembolso.',
+      'bp.f3.h':'€25 setup','bp.f3.d':'único en planes trimestral y anual. Cubre el tiempo de onboarding.',
       'ps.1':'Programa de entreno mensual','ps.2':'Acceso a la app de entreno','ps.3':'1 check-in semanal','ps.4':'Biblioteca de ejercicios','ps.5':'Soporte por mensaje','ps.btn':'Empezar',
       'pp.1':'Programa semanal adaptado','pp.2':'Plan nutricional completo','pp.3':'Check-ins 3x por semana','pp.4':'Análisis de vídeo de los entrenos','pp.5':'Soporte prioritario 24/7','pp.6':'Evaluación mensual completa','pp.btn':'Elegir Pro',
       'pe.1':'4 sesiones presenciales por mes','pe.2':'Programa y nutrición completos','pe.3':'Acompañamiento diario','pe.4':'Acceso directo al entrenador','pe.5':'Suplementación orientada','pe.6':'Análisis corporal mensual','pe.7':'Contenido exclusivo','pe.btn':'Elegir Elite',
