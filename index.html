@@ -1208,14 +1208,24 @@
             <option data-i18n="f.mod.4">Ainda não sei</option>
           </select>
         </div>
-        <div class="f-group">
-          <label data-i18n="f.plan">Plano de interesse</label>
-          <select name="plano" id="planoSelect">
-            <option value="" selected data-i18n="f.plan.ph">Sem preferência</option>
-            <option value="starter">Starter</option>
-            <option value="pro">Pro</option>
-            <option value="elite">Elite</option>
-          </select>
+        <div class="f-row">
+          <div class="f-group">
+            <label data-i18n="f.plan">Plano de interesse</label>
+            <select name="plano" id="planoSelect">
+              <option value="" selected data-i18n="f.plan.ph">Sem preferência</option>
+              <option value="starter">Starter</option>
+              <option value="pro">Pro</option>
+              <option value="elite">Elite</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label data-i18n="f.period">Período</label>
+            <select name="periodo" id="periodoSelect">
+              <option value="monthly" selected data-i18n="bt.month">Mensal</option>
+              <option value="quarterly" data-i18n="bt.quarter">Trimestral</option>
+              <option value="yearly" data-i18n="bt.year">Anual</option>
+            </select>
+          </div>
         </div>
         <div class="f-group"><label data-i18n="f.msg">Mensagem</label><textarea name="mensagem" id="msgInput" data-i18n-ph="f.msg.ph" placeholder="Conta-me um pouco sobre ti..."></textarea></div>
         <div id="formMsg" style="display:none;padding:12px;border-radius:4px;margin-bottom:16px;font-size:14px;font-weight:600;"></div>
@@ -1332,7 +1342,8 @@
       'f.name':'Nome','f.name.ph':'O teu nome','f.contact':'Contacto','f.contact.ph':'Telefone ou email',
       'f.goal':'Objetivo','f.goal.ph':'Seleciona o teu objetivo','f.goal.1':'Perder Peso','f.goal.2':'Ganhar Massa Muscular','f.goal.3':'Melhorar Condição Física','f.goal.4':'Reabilitação','f.goal.5':'Outro',
       'f.mod':'Modalidade','f.mod.ph':'Presencial ou Online?','f.mod.1':'Treino Presencial','f.mod.2':'Coaching Online','f.mod.3':'Treino em Casa','f.mod.4':'Ainda não sei',
-      'f.plan':'Plano de interesse','f.plan.ph':'Sem preferência','f.preset.plan':'Olá, tenho interesse no plano {p}. Gostaria de saber mais.',
+      'f.plan':'Plano de interesse','f.plan.ph':'Sem preferência','f.period':'Período',
+      'f.preset.plan':'Olá, tenho interesse no plano {p} com pagamento {b}. Gostaria de saber mais.',
       'f.msg':'Mensagem','f.msg.ph':'Conta-me um pouco sobre ti...','f.btn':'Enviar Mensagem','f.sending':'A enviar...',
       'f.ok':'✓ Mensagem enviada. Respondo em menos de 24h.','f.err':'Algo correu mal. Tenta novamente ou contacta diretamente pelo WhatsApp.','f.offline':'Sem ligação. Verifica a tua internet e tenta novamente.','f.rate':'Já enviaste uma mensagem recentemente. Tenta novamente em {n} minuto(s).',
       'ft.brand':'Personal trainer certificado, aqui para te fazer ir ao ginásio mesmo quando não apetece.','ft.nav':'Navegação','ft.nav.1':'Sobre Mim','ft.nav.3':'Método','ft.rights':'Todos os direitos reservados.','ft.made':'Feito com','ft.in':'em Portugal'
@@ -1389,7 +1400,8 @@
       'f.name':'Name','f.name.ph':'Your name','f.contact':'Contact','f.contact.ph':'Phone or email',
       'f.goal':'Goal','f.goal.ph':'Select your goal','f.goal.1':'Lose Weight','f.goal.2':'Build Muscle','f.goal.3':'Improve Fitness','f.goal.4':'Rehabilitation','f.goal.5':'Other',
       'f.mod':'Format','f.mod.ph':'In-Person or Online?','f.mod.1':'In-Person Training','f.mod.2':'Online Coaching','f.mod.3':'Home Training','f.mod.4':'Not sure yet',
-      'f.plan':'Plan of interest','f.plan.ph':'No preference','f.preset.plan':"Hi, I'm interested in the {p} plan. I'd like to know more.",
+      'f.plan':'Plan of interest','f.plan.ph':'No preference','f.period':'Billing period',
+      'f.preset.plan':"Hi, I'm interested in the {p} plan with {b} billing. I'd like to know more.",
       'f.msg':'Message','f.msg.ph':'Tell me a bit about yourself...','f.btn':'Send Message','f.sending':'Sending...',
       'f.ok':'✓ Message sent. I reply within 24h.','f.err':'Something went wrong. Try again or message me on WhatsApp.','f.offline':'No connection. Check your internet and try again.','f.rate':'You already sent a message recently. Try again in {n} minute(s).',
       'ft.brand':"Certified personal trainer, here to get you to the gym even when you don't feel like it.",'ft.nav':'Navigation','ft.nav.1':'About Me','ft.nav.3':'Method','ft.rights':'All rights reserved.','ft.made':'Made with','ft.in':'in Portugal'
@@ -1446,7 +1458,8 @@
       'f.name':'Nombre','f.name.ph':'Tu nombre','f.contact':'Contacto','f.contact.ph':'Teléfono o email',
       'f.goal':'Objetivo','f.goal.ph':'Selecciona tu objetivo','f.goal.1':'Perder Peso','f.goal.2':'Ganar Masa Muscular','f.goal.3':'Mejorar Condición Física','f.goal.4':'Rehabilitación','f.goal.5':'Otro',
       'f.mod':'Modalidad','f.mod.ph':'¿Presencial u Online?','f.mod.1':'Entrenamiento Presencial','f.mod.2':'Coaching Online','f.mod.3':'Entrenamiento en Casa','f.mod.4':'Aún no lo sé',
-      'f.plan':'Plan de interés','f.plan.ph':'Sin preferencia','f.preset.plan':'Hola, me interesa el plan {p}. Me gustaría saber más.',
+      'f.plan':'Plan de interés','f.plan.ph':'Sin preferencia','f.period':'Periodo',
+      'f.preset.plan':'Hola, me interesa el plan {p} con pago {b}. Me gustaría saber más.',
       'f.msg':'Mensaje','f.msg.ph':'Cuéntame un poco sobre ti...','f.btn':'Enviar Mensaje','f.sending':'Enviando...',
       'f.ok':'✓ Mensaje enviado. Respondo en menos de 24h.','f.err':'Algo salió mal. Inténtalo de nuevo o escríbeme por WhatsApp.','f.offline':'Sin conexión. Verifica tu internet e inténtalo de nuevo.','f.rate':'Ya enviaste un mensaje recientemente. Inténtalo en {n} minuto(s).',
       'ft.brand':'Personal trainer certificado, aquí para hacerte ir al gimnasio incluso cuando no te apetece.','ft.nav':'Navegación','ft.nav.1':'Sobre Mí','ft.nav.3':'Método','ft.rights':'Todos los derechos reservados.','ft.made':'Hecho con','ft.in':'en Portugal'
@@ -1535,6 +1548,8 @@
     document.querySelectorAll('.bt-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.billing === b);
     });
+    const ps = document.getElementById('periodoSelect');
+    if (ps) ps.value = b;
   }
   document.querySelectorAll('.bt-btn').forEach(b => {
     b.addEventListener('click', () => applyBilling(b.dataset.billing));
@@ -1657,21 +1672,26 @@
     btn.addEventListener('click', () => {
       const plan = btn.dataset.plan;
       const sel = document.getElementById('planoSelect');
+      const per = document.getElementById('periodoSelect');
       const msg = document.getElementById('msgInput');
       const lang = document.documentElement.lang || 'pt';
       const dict = T[lang] || T.pt;
       if (sel) sel.value = plan;
+      if (per) per.value = currentBilling;
       if (msg && !msg.value.trim()) {
-        const tpl = dict['f.preset.plan'] || 'Olá, tenho interesse no plano {p}.';
-        const label = plan.charAt(0).toUpperCase() + plan.slice(1);
-        msg.value = tpl.replace('{p}', label);
+        const tpl = dict['f.preset.plan'] || 'Olá, tenho interesse no plano {p} com pagamento {b}.';
+        const planLabel = plan.charAt(0).toUpperCase() + plan.slice(1);
+        const periodKey = 'bt.' + (currentBilling === 'monthly' ? 'month' : currentBilling === 'quarterly' ? 'quarter' : 'year');
+        const periodLabel = (dict[periodKey] || currentBilling).toLowerCase();
+        msg.value = tpl.replace('{p}', planLabel).replace('{b}', periodLabel);
       }
-      // brief visual cue on the plan select
-      if (sel) {
-        sel.style.transition = 'border-color .3s';
-        sel.style.borderColor = 'var(--orange)';
-        setTimeout(() => { sel.style.borderColor = ''; }, 1200);
-      }
+      // brief visual cue
+      [sel, per].forEach(el => {
+        if (!el) return;
+        el.style.transition = 'border-color .3s';
+        el.style.borderColor = 'var(--orange)';
+        setTimeout(() => { el.style.borderColor = ''; }, 1200);
+      });
     });
   });
 
