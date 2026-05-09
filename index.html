@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Diogo Cerdoura · Personal Trainer</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1277,7 +1278,12 @@
       </div>
     </div>
     <div class="reveal">
-      <form class="contact-form" id="contactForm" action="https://formspree.io/f/FORM_ID_AQUI" method="POST">
+      <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="16109367-8fb2-4bac-a655-ab4c33e8388b" />
+        <input type="hidden" name="subject" value="Nova consulta no site - Diogo Cerdoura" />
+        <input type="hidden" name="from_name" value="diogocerdoura.com" />
+        <input type="hidden" name="redirect" value="https://diogocerdoura.com#contacto" />
+        <input type="checkbox" name="botcheck" style="display:none;position:absolute;left:-9999px;" tabindex="-1" autocomplete="off" />
         <input type="text" name="_gotcha" style="display:none;position:absolute;left:-9999px;" tabindex="-1" autocomplete="off" />
         <div class="f-row">
           <div class="f-group"><label data-i18n="f.name">Nome</label><input type="text" name="nome" data-i18n-ph="f.name.ph" placeholder="O teu nome" required /></div>
@@ -1324,6 +1330,7 @@
           </div>
         </div>
         <div class="f-group"><label data-i18n="f.msg">Mensagem</label><textarea name="mensagem" id="msgInput" data-i18n-ph="f.msg.ph" placeholder="Conta-me um pouco sobre ti..."></textarea></div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAADMMlgeEOAeYOGQJ" data-theme="auto" style="margin-bottom:16px;"></div>
         <div id="formMsg" style="display:none;padding:12px;border-radius:4px;margin-bottom:16px;font-size:14px;font-weight:600;"></div>
         <button type="submit" class="f-submit" id="fsub" data-i18n="f.btn">Enviar Mensagem</button>
       </form>
@@ -1449,7 +1456,7 @@
       'f.plan':'Plano de interesse','f.plan.ph':'Sem preferência','f.period':'Período',
       'f.preset.plan':'Olá, tenho interesse no plano {p} com pagamento {b}. Gostaria de saber mais.',
       'f.msg':'Mensagem','f.msg.ph':'Conta-me um pouco sobre ti...','f.btn':'Enviar Mensagem','f.sending':'A enviar...',
-      'f.ok':'✓ Mensagem enviada. Respondo em menos de 24h.','f.err':'Algo correu mal. Tenta novamente ou contacta diretamente pelo WhatsApp.','f.offline':'Sem ligação. Verifica a tua internet e tenta novamente.','f.rate':'Já enviaste uma mensagem recentemente. Tenta novamente em {n} minuto(s).',
+      'f.ok':'✓ Mensagem enviada. Respondo em menos de 24h.','f.err':'Algo correu mal. Tenta novamente ou contacta diretamente pelo WhatsApp.','f.offline':'Sem ligação. Verifica a tua internet e tenta novamente.','f.rate':'Já enviaste uma mensagem recentemente. Tenta novamente em {n} minuto(s).','f.captcha':'Por favor completa a verificação de segurança.',
       'ft.brand':'Personal trainer certificado, aqui para te fazer ir ao ginásio mesmo quando não apetece.','ft.nav':'Navegação','ft.nav.1':'Sobre Mim','ft.nav.3':'Método','ft.rights':'Todos os direitos reservados.','ft.made':'Feito com','ft.in':'em Portugal'
     },
     en: {
@@ -1515,7 +1522,7 @@
       'f.plan':'Plan of interest','f.plan.ph':'No preference','f.period':'Billing period',
       'f.preset.plan':"Hi, I'm interested in the {p} plan with {b} billing. I'd like to know more.",
       'f.msg':'Message','f.msg.ph':'Tell me a bit about yourself...','f.btn':'Send Message','f.sending':'Sending...',
-      'f.ok':'✓ Message sent. I reply within 24h.','f.err':'Something went wrong. Try again or message me on WhatsApp.','f.offline':'No connection. Check your internet and try again.','f.rate':'You already sent a message recently. Try again in {n} minute(s).',
+      'f.ok':'✓ Message sent. I reply within 24h.','f.err':'Something went wrong. Try again or message me on WhatsApp.','f.offline':'No connection. Check your internet and try again.','f.rate':'You already sent a message recently. Try again in {n} minute(s).','f.captcha':'Please complete the security check.',
       'ft.brand':"Certified personal trainer, here to get you to the gym even when you don't feel like it.",'ft.nav':'Navigation','ft.nav.1':'About Me','ft.nav.3':'Method','ft.rights':'All rights reserved.','ft.made':'Made with','ft.in':'in Portugal'
     },
     es: {
@@ -1581,7 +1588,7 @@
       'f.plan':'Plan de interés','f.plan.ph':'Sin preferencia','f.period':'Periodo',
       'f.preset.plan':'Hola, me interesa el plan {p} con pago {b}. Me gustaría saber más.',
       'f.msg':'Mensaje','f.msg.ph':'Cuéntame un poco sobre ti...','f.btn':'Enviar Mensaje','f.sending':'Enviando...',
-      'f.ok':'✓ Mensaje enviado. Respondo en menos de 24h.','f.err':'Algo salió mal. Inténtalo de nuevo o escríbeme por WhatsApp.','f.offline':'Sin conexión. Verifica tu internet e inténtalo de nuevo.','f.rate':'Ya enviaste un mensaje recientemente. Inténtalo en {n} minuto(s).',
+      'f.ok':'✓ Mensaje enviado. Respondo en menos de 24h.','f.err':'Algo salió mal. Inténtalo de nuevo o escríbeme por WhatsApp.','f.offline':'Sin conexión. Verifica tu internet e inténtalo de nuevo.','f.rate':'Ya enviaste un mensaje recientemente. Inténtalo en {n} minuto(s).','f.captcha':'Por favor completa la verificación de seguridad.',
       'ft.brand':'Personal trainer certificado, aquí para hacerte ir al gimnasio incluso cuando no te apetece.','ft.nav':'Navegación','ft.nav.1':'Sobre Mí','ft.nav.3':'Método','ft.rights':'Todos los derechos reservados.','ft.made':'Hecho con','ft.in':'en Portugal'
     }
   };
@@ -1861,14 +1868,25 @@
 
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
+    // Honeypot fields - if filled, silently fake success (bots don't notice)
     if (form._gotcha && form._gotcha.value !== '') return;
+    if (form.botcheck && form.botcheck.checked) return;
+
     const lang = document.documentElement.lang || 'pt';
     const dict = T[lang] || T.pt;
 
+    // Rate limit per device: 30 minutes between submissions
     const last = localStorage.getItem('formSent');
     if (last && Date.now() - parseInt(last) < RATE_LIMIT_MS) {
       const mins = Math.ceil((RATE_LIMIT_MS - (Date.now() - parseInt(last))) / 60000);
       showMsg(dict['f.rate'].replace('{n}', mins), false);
+      return;
+    }
+
+    // Check Turnstile token
+    const turnstileResponse = form.querySelector('[name="cf-turnstile-response"]');
+    if (!turnstileResponse || !turnstileResponse.value) {
+      showMsg(dict['f.captcha'] || 'Please complete the security check.', false);
       return;
     }
 
@@ -1881,10 +1899,12 @@
         body: new FormData(form),
         headers: { 'Accept': 'application/json' }
       });
-      if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success !== false) {
         localStorage.setItem('formSent', Date.now().toString());
         showMsg(dict['f.ok'], true);
         form.reset();
+        if (window.turnstile) window.turnstile.reset();
       } else {
         showMsg(dict['f.err'], false);
       }
