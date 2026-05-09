@@ -17,7 +17,7 @@
       --gray:     #888580;
       --orange:   #3DBDB8;
       --orange2:  #2A9E99;
-      --white:    #FBF7EF;
+      --white:    #FBF7EF;h
       --line:     rgba(0,0,0,.1);
       --line-soft:rgba(0,0,0,.06);
       --serif: 'Playfair Display', Georgia, serif;
@@ -1896,7 +1896,7 @@
     try {
       const res = await fetch(form.action, {
         method: 'POST',
-        body: new FormData(form),
+        body: (() => { const fd = new FormData(form); fd.delete('cf-turnstile-response'); return fd; })(),
         headers: { 'Accept': 'application/json' }
       });
       const data = await res.json().catch(() => ({}));
