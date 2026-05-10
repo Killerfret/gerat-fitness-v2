@@ -1456,7 +1456,7 @@
       'f.plan':'Plano de interesse','f.plan.ph':'Sem preferência','f.period':'Período',
       'f.preset.plan':'Olá, tenho interesse no plano {p} com pagamento {b}. Gostaria de saber mais.',
       'f.msg':'Mensagem','f.msg.ph':'Conta-me um pouco sobre ti...','f.btn':'Enviar Mensagem','f.sending':'A enviar...',
-      'f.ok':'✓ Mensagem enviada. Respondo em menos de 24h.','f.err':'Algo correu mal. Tenta novamente ou contacta diretamente pelo WhatsApp.','f.offline':'Sem ligação. Verifica a tua internet e tenta novamente.','f.rate':'Já enviaste uma mensagem recentemente. Tenta novamente em {n} minuto(s).','f.captcha':'Por favor completa a verificação de segurança.',
+      'f.ok':'✓ Mensagem enviada. Respondo em menos de 24h.','f.err':'Algo correu mal. Tenta novamente ou contacta diretamente pelo WhatsApp.','f.offline':'Sem ligação. Verifica a tua internet e tenta novamente.','f.rate':'Já enviaste uma mensagem recentemente. Tenta novamente em {n} minuto(s).','f.captcha':'Por favor completa a verificação de segurança.','f.invalidContact':'Por favor introduz um email válido ou número de telefone.','f.invalidName':'Por favor introduz um nome válido.',
       'ft.brand':'Personal trainer certificado, aqui para te fazer ir ao ginásio mesmo quando não apetece.','ft.nav':'Navegação','ft.nav.1':'Sobre Mim','ft.nav.3':'Método','ft.rights':'Todos os direitos reservados.','ft.made':'Feito com','ft.in':'em Portugal'
     },
     en: {
@@ -1522,7 +1522,7 @@
       'f.plan':'Plan of interest','f.plan.ph':'No preference','f.period':'Billing period',
       'f.preset.plan':"Hi, I'm interested in the {p} plan with {b} billing. I'd like to know more.",
       'f.msg':'Message','f.msg.ph':'Tell me a bit about yourself...','f.btn':'Send Message','f.sending':'Sending...',
-      'f.ok':'✓ Message sent. I reply within 24h.','f.err':'Something went wrong. Try again or message me on WhatsApp.','f.offline':'No connection. Check your internet and try again.','f.rate':'You already sent a message recently. Try again in {n} minute(s).','f.captcha':'Please complete the security check.',
+      'f.ok':'✓ Message sent. I reply within 24h.','f.err':'Something went wrong. Try again or message me on WhatsApp.','f.offline':'No connection. Check your internet and try again.','f.rate':'You already sent a message recently. Try again in {n} minute(s).','f.captcha':'Please complete the security check.','f.invalidContact':'Please enter a valid email or phone number.','f.invalidName':'Please enter a valid name.',
       'ft.brand':"Certified personal trainer, here to get you to the gym even when you don't feel like it.",'ft.nav':'Navigation','ft.nav.1':'About Me','ft.nav.3':'Method','ft.rights':'All rights reserved.','ft.made':'Made with','ft.in':'in Portugal'
     },
     es: {
@@ -1588,7 +1588,7 @@
       'f.plan':'Plan de interés','f.plan.ph':'Sin preferencia','f.period':'Periodo',
       'f.preset.plan':'Hola, me interesa el plan {p} con pago {b}. Me gustaría saber más.',
       'f.msg':'Mensaje','f.msg.ph':'Cuéntame un poco sobre ti...','f.btn':'Enviar Mensaje','f.sending':'Enviando...',
-      'f.ok':'✓ Mensaje enviado. Respondo en menos de 24h.','f.err':'Algo salió mal. Inténtalo de nuevo o escríbeme por WhatsApp.','f.offline':'Sin conexión. Verifica tu internet e inténtalo de nuevo.','f.rate':'Ya enviaste un mensaje recientemente. Inténtalo en {n} minuto(s).','f.captcha':'Por favor completa la verificación de seguridad.',
+      'f.ok':'✓ Mensaje enviado. Respondo en menos de 24h.','f.err':'Algo salió mal. Inténtalo de nuevo o escríbeme por WhatsApp.','f.offline':'Sin conexión. Verifica tu internet e inténtalo de nuevo.','f.rate':'Ya enviaste un mensaje recientemente. Inténtalo en {n} minuto(s).','f.captcha':'Por favor completa la verificación de seguridad.','f.invalidContact':'Por favor introduce un email válido o número de teléfono.','f.invalidName':'Por favor introduce un nombre válido.',
       'ft.brand':'Personal trainer certificado, aquí para hacerte ir al gimnasio incluso cuando no te apetece.','ft.nav':'Navegación','ft.nav.1':'Sobre Mí','ft.nav.3':'Método','ft.rights':'Todos los derechos reservados.','ft.made':'Hecho con','ft.in':'en Portugal'
     }
   };
@@ -1874,6 +1874,25 @@
 
     const lang = document.documentElement.lang || 'pt';
     const dict = T[lang] || T.pt;
+
+    // Validate contact field: must be valid email OR valid phone number
+    const contactValue = (form.contacto && form.contacto.value || '').trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+    const phoneDigits = contactValue.replace(/[\s\-().+/]/g, '');
+    const isEmail = emailRegex.test(contactValue);
+    const isPhone = /^\d{7,15}$/.test(phoneDigits);
+    if (!isEmail && !isPhone) {
+      showMsg(dict['f.invalidContact'] || 'Please enter a valid email or phone number.', false);
+      if (form.contacto) form.contacto.focus();
+      return;
+    }
+    // Validate name: at least 2 chars, must contain a letter
+    const nameValue = (form.nome && form.nome.value || '').trim();
+    if (nameValue.length < 2 || !/[a-zA-ZÀ-ÿ]/.test(nameValue)) {
+      showMsg(dict['f.invalidName'] || 'Please enter a valid name.', false);
+      if (form.nome) form.nome.focus();
+      return;
+    }
 
     // Rate limit per device: 30 minutes between submissions
     const last = localStorage.getItem('formSent');
